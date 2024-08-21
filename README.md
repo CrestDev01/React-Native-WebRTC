@@ -6,8 +6,6 @@ Welcome to the Video Calling Application! This React Native app allows users to 
 ---
 
 ## Screenshots
-# My Project
-
 ##
 <img src="https://github.com/user-attachments/assets/e0adc756-b1ef-493b-9a6c-7bff307f8ec8" alt="Screenshot 1724224573" width="233" /> <img src="https://github.com/user-attachments/assets/40085cc6-cefd-47f5-b9bd-635dd308c1c9" alt="Screenshot 1724224575" width="233" /> <img src="https://github.com/user-attachments/assets/cf2d0c13-2f82-464b-a151-632520abec25" alt="Screenshot 1724224561" width="233" />
 
