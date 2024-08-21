@@ -148,17 +148,17 @@ const OutgoingAndConnected = ({navigation, route}) => {
     [localStream, socket, navigation],
   );
 
-  // Handle the remote user ending the call
+  // Handle the Remote user ending the call
   const handleEndCall = useCallback(() => {
     endCall(false);
   }, [endCall]);
 
-  // Handle remote user muting/unmuting their mic
+  // Handle Remote user muting/unmuting their mic
   const handleMuteCall = isMuted => {
     setRemoteUserMuted(isMuted);
   };
 
-  // Handle remote user turning their camera on/off
+  // Handle Remote user turning their camera on/off
   const handleCamChangeCall = isCamOn => {
     setRemoteUserCamOff(!isCamOn);
   };
@@ -201,7 +201,7 @@ const OutgoingAndConnected = ({navigation, route}) => {
           {remoteUserMuted && !remoteUserCamOff && (
             <View style={styles.messageOverlay}>
               <Text style={styles.messageText}>
-                Remote user has muted their mic
+                Remote user has muted his/her mic
               </Text>
             </View>
           )}

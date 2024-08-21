@@ -150,17 +150,17 @@ const IncommingAndConnected = ({navigation, route}) => {
     }
   };
 
-  // Handle the end-call event from the remote user
+  // Handle the end-call event from the Remote user
   const handleEndCall = () => {
     endCall(false);
   };
 
-  // Handle mute state change from the remote user
+  // Handle mute state change from the Remote user
   const handleMuteCall = isMuted => {
     setRemoteUserMuted(isMuted);
   };
 
-  // Handle camera state change from the remote user
+  // Handle camera state change from the Remote user
   const handleCamChangeCall = isCamOn => {
     setRemoteUserCamOff(!isCamOn);
   };
@@ -203,11 +203,11 @@ const IncommingAndConnected = ({navigation, route}) => {
               />
             )}
 
-            {/* Display message overlays based on remote user states */}
+            {/* Display message overlays based on Remote user states */}
             {remoteUserMuted && !remoteUserCamOff && (
               <View style={styles.messageOverlay}>
                 <Text style={styles.messageText}>
-                  Remote user has muted their mic
+                  Remote user has muted his/her mic
                 </Text>
               </View>
             )}
