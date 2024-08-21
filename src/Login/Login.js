@@ -1,46 +1,51 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
-import {COLORS} from '../../configs/Colors';
+import { COLORS } from '../../configs/Colors';
 import API from './../../configs/ApiService';
-import {ApiEndPoints} from '../../configs/ApiEndPoints';
+import { ApiEndPoints } from '../../configs/ApiEndPoints';
 import StorageService from '../../configs/StorageService';
 import Toast from 'react-native-simple-toast';
-import {KEYS, STRINGS} from '../../configs/StringUtils';
-import {SocketContext} from '../../context/SocketContext';
-import {startLoading, stopLoading} from './../../redux/reducers/reducer';
-import {useDispatch} from 'react-redux';
-import {setUserData} from './../../redux/reducers/userSlice';
+import { KEYS, STRINGS } from '../../configs/StringUtils';
+import { SocketContext } from '../../context/SocketContext';
+import { startLoading, stopLoading } from './../../redux/reducers/reducer';
+import { useDispatch } from 'react-redux';
+import { setUserData } from './../../redux/reducers/userSlice';
+import { styles } from './styles';
 
-const Login = ({navigation}) => {
-  // const [email, setEmail] = useState('dhruv.v@yopmail.com');
-  const [email, setEmail] = useState('rushikesh.p@yopmail.com');
+// Login component
+const Login = ({ navigation }) => {
+  // State variables for form inputs and error messages
+  const [email, setEmail] = useState('rushikesh.p@yopmail.com'); // Replace with default value if needed
   const [password, setPassword] = useState('123456');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const {socket} = useContext(SocketContext); // Access the socket context
+
+  // Access the socket context
+  const { socket } = useContext(SocketContext); 
   const dispatch = useDispatch();
 
+  // Effect hook to check login status on component mount
   useEffect(() => {
     const checkLoginStatus = async () => {
       const token = await StorageService.getData(KEYS.TOKEN);
       const userData = await StorageService.getData(KEYS.USER_DATA);
       if (token) {
-        SocketConnect();
-        dispatchUserData(JSON.parse(userData));
-        navigation.navigate('UserList');
+        SocketConnect(); // Establish socket connection
+        dispatchUserData(JSON.parse(userData)); // Dispatch user data to Redux store
+        navigation.navigate('UserList'); // Navigate to UserList if logged in
       }
     };
     checkLoginStatus();
   }, []);
 
-  const dispatchUserData = userData => {
-    console.log('dispatchUserData => ', userData);
+  // Function to dispatch user data to Redux store and emit to socket
+  const dispatchUserData = (userData) => {
+    
     dispatch(
       setUserData({
         token: userData.token,
@@ -50,15 +55,19 @@ const Login = ({navigation}) => {
     socket.current.emit('user_data', userData);
   };
 
+  // Function to establish socket connection
   const SocketConnect = () => {
     if (socket.current) {
       socket.current.connect();
-      console.log('Socket connected:', socket.current.connected);
+      
     }
   };
 
+  // Function to handle the login process
   const handleLogin = () => {
     let valid = true;
+
+    // Validate email
     if (!email) {
       setEmailError(STRINGS.EMAIL_REQUIRED);
       valid = false;
@@ -69,6 +78,7 @@ const Login = ({navigation}) => {
       setEmailError('');
     }
 
+    // Validate password
     if (!password) {
       setPasswordError(STRINGS.PASSWORD_REQUIRED);
       valid = false;
@@ -76,38 +86,40 @@ const Login = ({navigation}) => {
       setPasswordError('');
     }
 
+    // If all validations pass, proceed with the login process
     if (valid) {
-      // Perform actual login logic here (e.g., API call, authentication)
-      console.log('Logging in with:', {email, password});
-      dispatch(startLoading());
+      
+
+      dispatch(startLoading()); // Start loading indicator
+
+      // API call for login
       API.postRequest(
-        ApiEndPoints.SIGNIN,
-        {email, password},
+        ApiEndPoints.SIGNIN, // Replace with your actual signin endpoint
+        { email, password },
         {},
         async (data, status) => {
-          dispatch(stopLoading());
-          console.log('Login successful:', data);
+          dispatch(stopLoading()); // Stop loading indicator
+          
           const resData = data.data;
           try {
+            // Store user data locally
             await StorageService.setData(KEYS.TOKEN, resData.token);
             await StorageService.setData(KEYS.ID, resData._id);
-            await StorageService.setData(
-              KEYS.PROFILE_IMAGE,
-              resData.profileImage,
-            );
+            await StorageService.setData(KEYS.PROFILE_IMAGE, resData.profileImage);
             await StorageService.setData(KEYS.FULL_NAME, resData.fullName);
             await StorageService.setData(KEYS.EMAIL, resData.email);
             await StorageService.setData1(KEYS.USER_DATA, resData);
-            SocketConnect();
-            dispatchUserData(resData);
-            navigation.navigate('UserList');
+
+            SocketConnect(); // Reconnect socket
+            dispatchUserData(resData); // Dispatch user data
+            navigation.navigate('UserList'); // Navigate to UserList on success
           } catch (error) {
-            console.error('Error storing token', error);
+            
           }
         },
-        error => {
-          dispatch(stopLoading());
-          Toast.show(error.response.data.message, Toast.LONG);
+        (error) => {
+          dispatch(stopLoading()); // Stop loading indicator
+          Toast.show(error.response.data.message, Toast.LONG); // Show error message
         },
       );
     }
@@ -140,85 +152,20 @@ const Login = ({navigation}) => {
             secureTextEntry
             placeholder="Enter your password"
           />
-          {passwordError ? (
-            <Text style={styles.error}>{passwordError}</Text>
-          ) : null}
+          {passwordError ? <Text style={styles.error}>{passwordError}</Text> : null}
         </View>
         <TouchableOpacity style={styles.btn} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Signup');
-          }}
-          style={styles.btn}>
+          onPress={() => navigation.navigate('Signup')}
+          style={styles.btn}
+        >
           <Text style={styles.signupButtonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerIcon: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  headerText: {
-    fontSize: 32,
-    color: COLORS.PRIMARY,
-    fontWeight: 'bold',
-  },
-  form: {
-    width: '80%',
-  },
-  formGroup: {
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginTop: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    backgroundColor: '#fff',
-  },
-  error: {
-    color: 'red',
-    marginTop: 5,
-  },
-  btn: {
-    backgroundColor: COLORS.PRIMARY,
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  signupButtonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  inputHeader: {
-    color: COLORS.PRIMARY,
-  },
-});
 
 export default Login;

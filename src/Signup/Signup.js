@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
-import {COLORS} from '../../configs/Colors';
-import {ApiEndPoints} from '../../configs/ApiEndPoints';
-import API from './../../configs/ApiService';
-import {STRINGS} from '../../configs/StringUtils';
+import { COLORS } from '../../configs/Colors';
+import { ApiEndPoints } from '../../configs/ApiEndPoints';
+import API from '../../configs/ApiService';
+import { STRINGS } from '../../configs/StringUtils';
 import Toast from 'react-native-simple-toast';
+import { styles } from './styles';
 
-const Signup = ({navigation}) => {
+// Signup component
+const Signup = ({ navigation }) => {
+  // State variables for form inputs and error messages
   const [fullName, setFullName] = useState('Dhruv Patil');
   const [email, setEmail] = useState('dhruv.v@yopmail.com');
   const [password, setPassword] = useState('123456');
@@ -20,9 +22,11 @@ const Signup = ({navigation}) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  // Function to handle the signup process
   const handleSignup = () => {
     let valid = true;
 
+    // Validate full name
     if (!fullName) {
       setFullNameError(STRINGS.FULLNAME_REQUIRED);
       valid = false;
@@ -30,6 +34,7 @@ const Signup = ({navigation}) => {
       setFullNameError('');
     }
 
+    // Validate email
     if (!email) {
       setEmailError(STRINGS.EMAIL_REQUIRED);
       valid = false;
@@ -40,6 +45,7 @@ const Signup = ({navigation}) => {
       setEmailError('');
     }
 
+    // Validate password
     if (!password) {
       setPasswordError(STRINGS.PASSWORD_REQUIRED);
       valid = false;
@@ -47,18 +53,19 @@ const Signup = ({navigation}) => {
       setPasswordError('');
     }
 
+    // If all validations pass, proceed with the signup process
     if (valid) {
-      // Perform actual signup logic here (e.g., API call, authentication)
-      console.log('Signing up with:', {fullName, email, password});
+      
+
+      // API call for signup
       API.postRequest(
-        ApiEndPoints.SIGNUP, // Replace with your actual login endpoint
-        {fullName, email, password},
+        ApiEndPoints.SIGNUP, // Replace with your actual signup endpoint
+        { fullName, email, password },
         {},
         async (data, status) => {
-          console.log('Signup successful : ', data);
-          // const resData = data.data;
+          
           Toast.show(data.message, Toast.LONG);
-          navigation.goBack();
+          navigation.goBack(); // Navigate back after successful signup
         },
         error => {
           Toast.show(error.response.data.message, Toast.LONG);
@@ -113,70 +120,12 @@ const Signup = ({navigation}) => {
         <TouchableOpacity style={styles.btn} onPress={handleSignup}>
           <Text style={styles.signupButtonText}>Signup</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate('Login');}}>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.signupButtonText}>Log In</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerIcon: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  headerText: {
-    fontSize: 24,
-    color: COLORS.PRIMARY,
-    fontWeight: 'bold',
-  },
-  form: {
-    width: '80%',
-  },
-  formGroup: {
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginTop: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    backgroundColor: '#fff',
-  },
-  error: {
-    color: 'red',
-    marginTop: 5,
-  },
-  btn: {
-    backgroundColor: COLORS.PRIMARY,
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  signupButtonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  inputHeader: {
-    color: COLORS.PRIMARY,
-  },
-});
 
 export default Signup;

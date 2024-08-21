@@ -47,4 +47,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  userName:{ fontSize: 14, fontWeight:"900",  color: 'white' },
+  userEmail:{ fontSize: 14, color: 'white' },
+  userInfoContainer:{ backgroundColor: COLORS.PRIMARY, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 8, paddingHorizontal:15 }
+
 });

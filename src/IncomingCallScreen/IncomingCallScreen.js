@@ -1,74 +1,52 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import CallAnswer from './../../asset/CallAnswer';
-import {SocketContext} from '../../context/SocketContext';
+import CallEnd from './../../asset/CallEnd';
+import { SocketContext } from '../../context/SocketContext';
+import { styles } from './styles';
 
-const IncomingCallScreen = ({navigation}) => {
-  const {socket, isConnected, incomingOffer, incomingOfferFrom} =
-    useContext(SocketContext); // Access the socket context
+const IncomingCallScreen = ({ navigation }) => {
+  const { socket, incomingOfferFrom } = useContext(SocketContext); // Access the socket context for incoming call data
 
+  // Function to accept the incoming call
   const acceptOffer = () => {
-    navigation.navigate('P2P');
+    navigation.navigate('P2P'); // Navigate to the P2P screen to start the call
+  };
+
+  // Function to reject the incoming call
+  const rejectOffer = () => {
+    socket.current.emit('end-call'); // Emit an event to end the call
+    navigation.navigate('UserList'); // Navigate back to the user list screen
   };
 
   return (
-    <View
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'black',
-      }}>
-      <View
-        style={{
-          padding: 35,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 14,
-        }}>
-        <Text
-          style={{
-            fontSize: 36,
-            marginTop: 12,
-            color: '#ffff',
-            textAlign: 'center',
-          }}>
+    <View style={styles.container}>
+      {/* Display the caller's name or show 'Unknown caller' if not available */}
+      <View style={styles.callerInfoContainer}>
+        <Text style={styles.callerText}>
           {incomingOfferFrom && incomingOfferFrom.fullName
             ? `${incomingOfferFrom.fullName} is calling...`
             : 'Unknown caller is calling...'}
         </Text>
       </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity
-          onPress={acceptOffer}
-          style={{
-            backgroundColor: 'green',
-            borderRadius: 30,
-            height: 60,
-            aspectRatio: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+
+      {/* Accept call button */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={acceptOffer} style={styles.acceptButton}>
           <CallAnswer height={28} fill={'#fff'} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Reject call button */}
+      <View style={[styles.buttonContainer, { marginTop: 20 }]}>
+        <TouchableOpacity onPress={rejectOffer} style={styles.rejectButton}>
+          <CallEnd height={26} width={26} fill="#FFF" />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+
 
 export default IncomingCallScreen;
