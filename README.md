@@ -6,11 +6,23 @@ Welcome to the Video Calling Application! This React Native app allows users to 
 ---
 
 ## Screenshots
-![Screenshot_1724224573](https://github.com/user-attachments/assets/e0adc756-b1ef-493b-9a6c-7bff307f8ec8)
-![Screenshot_1724224575](https://github.com/user-attachments/assets/40085cc6-cefd-47f5-b9bd-635dd308c1c9)
-![Screenshot_1724224561](https://github.com/user-attachments/assets/cf2d0c13-2f82-464b-a151-632520abec25)
-<img width="986" alt="Screenshot 2024-08-21 at 12 46 42 PM" src="https://github.com/user-attachments/assets/65df42c1-1784-4115-9a89-003a8759a943">
-<img width="972" alt="Screenshot 2024-08-21 at 12 49 12 PM" src="https://github.com/user-attachments/assets/0c17fae6-88e6-45d4-86e5-4e48b814e901">
+# My Project
+
+## Image 1
+<img src="https://github.com/user-attachments/assets/e0adc756-b1ef-493b-9a6c-7bff307f8ec8" alt="Screenshot 1724224573" width="300" />
+
+## Image 2
+<img src="https://github.com/user-attachments/assets/40085cc6-cefd-47f5-b9bd-635dd308c1c9" alt="Screenshot 1724224575" width="300" />
+
+## Image 3
+<img src="https://github.com/user-attachments/assets/cf2d0c13-2f82-464b-a151-632520abec25" alt="Screenshot 1724224561" width="300" />
+
+## Image 4
+<img src="https://github.com/user-attachments/assets/65df42c1-1784-4115-9a89-003a8759a943" alt="Screenshot 2024-08-21 at 12 46 42 PM" width="500" />
+
+## Image 5
+<img src="https://github.com/user-attachments/assets/0c17fae6-88e6-45d4-86e5-4e48b814e901" alt="Screenshot 2024-08-21 at 12 49 12 PM" width="500" />
+
 
 ## 🚀 Getting Started
 
