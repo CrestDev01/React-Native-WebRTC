@@ -1,38 +1,79 @@
-<!--  ==== ==== ==== ==== Starting the Server ==== ==== ==== ====  -->
-<!-- Open the project in VS Code or any other IDE. -->
-<!-- Run the following commands in the terminal -->
 
-cd server
-yarn
-yarn start
+# Video Calling Application using WebRTC 📱🎥
 
-<!--  ==== ==== ==== ==== Running the Project ==== ==== ==== ====  -->
-<!-- Run: -->
+Welcome to the Video Calling Application! This React Native app allows users to connect with each other via video calls using WebRTC. Once registered, users can log in, browse through a list of contacts, and initiate or receive video calls. The app is designed to provide a seamless and efficient communication experience, making it easy to stay connected with others through high-quality video interactions.
 
-yarn OR npm install
+---
 
-<!-- List the connected devices: -->
+## 🚀 Getting Started
 
-adb devices
+### 1. **Starting the Server**
 
-<!-- Example output: -->
+1. **Open the project** in VS Code or any other IDE.
+2. **Navigate to the server directory** by running the following command in the terminal:
 
-List of devices attached
-emulator-5554 device
-emulator-5556 device
-RZ8NA0RPWHL device
+   ```bash
+   cd server
+   ```
 
-<!-- Reverse the port for each device or simulator: -->
+3. **Install dependencies**:
 
-adb -s <device or simulator name> reverse tcp:3500 tcp:3500
+   ```bash
+   yarn
+   ```
 
-<!-- Example: -->
+4. **Start the server**:
 
-adb -s emulator-5556 reverse tcp:3500 tcp:3500
-adb -s RZ8NA0RPWHL reverse tcp:3500 tcp:3500
+   ```bash
+   yarn start
+   ```
 
-<!-- NOTE: Connect two devices. -->
+### 2. **Running the Project**
 
-<!-- Run the app: -->
+1. **Install project dependencies**:
 
-npx react-native run-android
+   ```bash
+   yarn
+   ```
+
+   or
+
+   ```bash
+   npm install
+   ```
+
+2. **List connected devices**:
+
+   ```bash
+   adb devices
+   ```
+
+   **Example output**:
+
+   ```
+   List of devices attached
+   emulator-5554 device
+   emulator-5556 device
+   RZ8NA0RPWHL device
+   ```
+
+3. **Reverse the port for each device or simulator**:
+
+   ```bash
+   adb -s <device or simulator name> reverse tcp:3500 tcp:3500
+   ```
+
+   **Example**:
+
+   ```bash
+   adb -s emulator-5556 reverse tcp:3500 tcp:3500
+   adb -s RZ8NA0RPWHL reverse tcp:3500 tcp:3500
+   ```
+
+   > **Note**: Connect two devices.
+
+4. **Run the app**:
+
+   ```bash
+   npx react-native run-android
+   ```
