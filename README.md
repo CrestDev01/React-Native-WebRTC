@@ -18,19 +18,20 @@ Welcome to the Video Calling Application! This React Native app allows users to 
 ### 1. **Starting the Server**
 
 1. **Open the project** in VS Code or any other IDE.
-2. **Navigate to the server directory** by running the following command in the terminal:
+2. **Update the Mongodb url** in server directory.
+3. **Navigate to the server directory** by running the following command in the terminal:
 
    ```bash
    cd server
    ```
 
-3. **Install dependencies**:
+4. **Install dependencies**:
 
    ```bash
    yarn
    ```
 
-4. **Start the server**:
+5. **Start the server**:
 
    ```bash
    yarn start
@@ -74,8 +75,8 @@ Welcome to the Video Calling Application! This React Native app allows users to 
    **Example**:
 
    ```bash
-   adb -s emulator-5556 reverse tcp:3500 tcp:3500
-   adb -s RZ8NA0RPWHL reverse tcp:3500 tcp:3500
+   adb -s emulator-5556 reverse tcp:3100 tcp:3100
+   adb -s RZ8NA0RPWHL reverse tcp:3100 tcp:3100
    ```
 
    > **Note**: Connect two devices.
